@@ -60,8 +60,33 @@
     <p>Đoạn văn này có chứa một từ được <em>nhấn mạnh</em> bằng thẻ em.</p>
     <img src="images.jpg" alt="Hình ảnh minh họa">
 
-    <!-- Phần JavaScript tạo hiệu ứng bong bóng và âm thanh khi click chuột -->
+    <!-- Phần JavaScript tạo hiệu ứng bong bóng và âm thanh tổng hợp -->
     <script>
+        // Hàm tạo âm thanh "pop" bong bóng bằng Web Audio API
+        function playPopSound() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                oscillator.type = 'sine';
+                // Tạo âm thanh tụt tần số nhanh để giống tiếng bong bóng vỡ
+                oscillator.frequency.setValueAtTime(450, audioCtx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.08);
+                
+                gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.08);
+            } catch (e) {
+                console.log("Lỗi âm thanh: ", e);
+            }
+        }
+
         document.addEventListener('click', function (e) {
             // 1. Tạo hiệu ứng hình ảnh bong bóng
             const bubble = document.createElement('div');
@@ -79,14 +104,8 @@
                 bubble.remove();
             }, 600);
 
-            // 2. Phát âm thanh tiếng "pop" (bong bóng vỡ)
-            // Sử dụng âm thanh mẫu công khai từ kho lưu trữ âm thanh trực tuyến
-            const popSound = new Audio('https://www.soundjay.com/buttons/sounds/button-37.mp3');
-            popSound.volume = 0.5; // Điều chỉnh âm lượng (từ 0.0 đến 1.0)
-            popSound.play().catch(error => {
-                // Tránh lỗi trình duyệt chặn âm thanh khi chưa tương tác đủ
-                console.log("Trình duyệt có thể chặn tự động phát âm thanh nếu chưa click lần đầu.");
-            });
+            // 2. Phát âm thanh bong bóng vỡ ngay lập tức
+            playPopSound();
         });
     </script>
 
