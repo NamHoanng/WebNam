@@ -9,7 +9,6 @@
 
     <!-- Phần CSS trang trí -->
     <style>
-        /* Áp dụng font Roboto cho toàn bộ trang web (ngoại trừ tiêu đề nếu muốn) */
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #f4f7f6;
@@ -19,7 +18,7 @@
 
         /* Tiêu đề màu xanh */
         h1 {
-            color: #0066cc; /* Xanh dương */
+            color: #0066cc;
         }
 
         /* Khối div chứa nội dung */
@@ -51,7 +50,6 @@
 </head>
 <body>
 
-    <!-- Khối div chứa các phần tử con bên trong -->
     <div>
         <h1>MY LIFE-MY CARE</h1>
         <p>ĐÂY là đoạn văn bản đầu tiên nằm trong khối div.</p>
@@ -59,31 +57,36 @@
         <p>ĐÂY là đoạn văn bản thứ hai nằm trong khối div.</p>
     </div>
 
-    <!-- Đoạn văn bản p chứa phần tử con nhấn mạnh em -->
     <p>Đoạn văn này có chứa một từ được <em>nhấn mạnh</em> bằng thẻ em.</p>
     <img src="images.jpg" alt="Hình ảnh minh họa">
 
-    <!-- Phần JavaScript tạo hiệu ứng bong bóng khi click chuột -->
+    <!-- Phần JavaScript tạo hiệu ứng bong bóng và âm thanh khi click chuột -->
     <script>
         document.addEventListener('click', function (e) {
+            // 1. Tạo hiệu ứng hình ảnh bong bóng
             const bubble = document.createElement('div');
             bubble.classList.add('bubble');
             
-            // Kích thước của bong bóng
             const size = 30;
             bubble.style.width = size + 'px';
             bubble.style.height = size + 'px';
-            
-            // Vị trí xuất hiện theo tọa độ chuột click
             bubble.style.left = (e.pageX - size / 2) + 'px';
             bubble.style.top = (e.pageY - size / 2) + 'px';
             
             document.body.appendChild(bubble);
 
-            // Xóa phần tử sau khi hiệu ứng kết thúc để tránh rác bộ nhớ
             setTimeout(() => {
                 bubble.remove();
             }, 600);
+
+            // 2. Phát âm thanh tiếng "pop" (bong bóng vỡ)
+            // Sử dụng âm thanh mẫu công khai từ kho lưu trữ âm thanh trực tuyến
+            const popSound = new Audio('https://www.soundjay.com/buttons/sounds/button-37.mp3');
+            popSound.volume = 0.5; // Điều chỉnh âm lượng (từ 0.0 đến 1.0)
+            popSound.play().catch(error => {
+                // Tránh lỗi trình duyệt chặn âm thanh khi chưa tương tác đủ
+                console.log("Trình duyệt có thể chặn tự động phát âm thanh nếu chưa click lần đầu.");
+            });
         });
     </script>
 
