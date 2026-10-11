@@ -3,18 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <title>Sơ đồ cấu trúc trang web</title>
-	
+    
+    <!-- Nhúng font chữ Roboto từ Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Phần CSS trang trí -->
+    <style>
+        /* Áp dụng font Roboto cho toàn bộ trang web (ngoại trừ tiêu đề nếu muốn) */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            padding: 20px;
+        }
+
+        /* Tiêu đề màu xanh */
+        h1 {
+            color: #0066cc; /* Xanh dương */
+        }
+
+        /* Khối div chứa nội dung */
+        div {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        /* --- CSS CHO HIỆU ỨNG BONG BÓNG --- */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(0, 150, 255, 0.5);
+            pointer-events: none;
+            transform: scale(0);
+            animation: bubble-animation 0.6s linear forwards;
+        }
+
+        @keyframes bubble-animation {
+            to {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
 <body>
+
     <!-- Khối div chứa các phần tử con bên trong -->
     <div>
-        <h1>MY LIFE-MY CARE
-		</h1>
-        <p>Đây là đoạn văn bản đầu tiên nằm trong khối div.</p>
+        <h1>MY LIFE-MY CARE</h1>
+        <p>ĐÂY là đoạn văn bản đầu tiên nằm trong khối div.</p>
         <hr>
-        <p>Đây là đoạn văn bản thứ hai nằm trong khối div.</p>
+        <p>ĐÂY là đoạn văn bản thứ hai nằm trong khối div.</p>
     </div>
 
     <!-- Đoạn văn bản p chứa phần tử con nhấn mạnh em -->
     <p>Đoạn văn này có chứa một từ được <em>nhấn mạnh</em> bằng thẻ em.</p>
-	<img src="images.jpg">
+    <img src="images.jpg" alt="Hình ảnh minh họa">
+
+    <!-- Phần JavaScript tạo hiệu ứng bong bóng khi click chuột -->
+    <script>
+        document.addEventListener('click', function (e) {
+            const bubble = document.createElement('div');
+            bubble.classList.add('bubble');
+            
+            // Kích thước của bong bóng
+            const size = 30;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            
+            // Vị trí xuất hiện theo tọa độ chuột click
+            bubble.style.left = (e.pageX - size / 2) + 'px';
+            bubble.style.top = (e.pageY - size / 2) + 'px';
+            
+            document.body.appendChild(bubble);
+
+            // Xóa phần tử sau khi hiệu ứng kết thúc để tránh rác bộ nhớ
+            setTimeout(() => {
+                bubble.remove();
+            }, 600);
+        });
+    </script>
+
+</body>
+</html>
